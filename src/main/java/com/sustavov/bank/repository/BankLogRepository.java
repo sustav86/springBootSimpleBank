@@ -15,13 +15,17 @@ import java.util.List;
 public interface BankLogRepository extends JpaRepository<BankLog, Integer> {
 
     @Query(value = "select * " +
-            "from bank_log as bl inner join client_account_bank_log as ca_bl on bl.id=ca_bl.bank_log_id " +
+            "from bank_log as bl " +
+            "inner join client_account_bank_log as ca_bl " +
+            "on bl.id=ca_bl.bank_log_id " +
             "where ca_bl.client_account_id=(:cardId)",
             nativeQuery = true)
     List<BankLog> findBankLogByCard(@Param("cardId") int cardId);
 
     @Query(value = "select * " +
-            "from bank_log as bl inner join client_account_bank_log as ca_bl on bl.id=ca_bl.bank_log_id " +
+            "from bank_log as bl " +
+            "inner join client_account_bank_log as ca_bl " +
+            "on bl.id=ca_bl.bank_log_id " +
             "where ca_bl.client_account_id=(:cardId) and bl.date_and_time between (:fromDate) and (:toDate)",
             nativeQuery = true)
     List<BankLog> findBankLogByCardByDate(@Param("cardId") int cardId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
